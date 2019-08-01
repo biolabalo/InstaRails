@@ -1,0 +1,133 @@
+<div class="user-profile">
+  <div class="profile row mt-5 pt-5">
+    <div class="col-md-4">
+      <div class="wrapper">
+<div class = 'M-jxE'> 
+<%= gravatar_for @user, size: 40 %>
+</div>
+
+      </div>
+    </div>
+    <div class="col-md-8 basic-info">
+      <div class="user-wrapper">
+     <h2 class="username"><%= @user.username %></h2>
+
+
+ <% if logged_in? && current_user ==  @user %>
+   <a class="edit-profile" href="/accounts/edit">
+     <button>
+     Edit Profile
+     </button>
+     </a>
+  <% else %>
+   <a class="edit-profile" href="">
+     <button>
+     Following
+     </button>
+     </a>
+    <% end %> 
+
+
+
+      </div>
+      <ul class = 'list-inline'>
+        <li class ='list-inline-item mr-5'><span class='font-weight-bold'><%= @user.posts.count %></span> <%= @user.posts.count > 1 ? 'Posts' : 'Post' %> </li>
+        <li class ='list-inline-item mr-5'><span class='font-weight-bold'>195</span> followers</li>
+        <li class ='list-inline-item'><span class='font-weight-bold'>345</span> following</li>
+      </ul>
+      <h2 class="name">
+    </div>
+  </div>
+
+  <div class="user-tabs">
+    <a class="tab active" href="">
+      <i class="fa fa-th"></i>
+      POSTS
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-tv"></i>
+      IGTV
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-bookmark"></i>
+      SAVED
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-tag"></i>
+      TAGGED
+    </a>
+  </div>
+
+ 
+
+
+
+<% if @posts.blank? %>
+  <h1>No Posts Yet</h1>
+<% else %>
+<div class="grid-container pt-5">
+
+<% @posts.each do |post|%>
+<div class="grid-item mr-3 mb-4">
+  <p class = 'd-none'> <%= post.description %> </p>
+ <%= image_tag(post.image, class:"img_preview", 'data-target' => "#myModal",  'data-toggle' => "modal") if post.image.attached? %>
+</div>
+<% end %>
+
+</div>
+<% end %>
+
+
+
+
+ <div class="modal fade image-modal" id="myModal" role="dialog">
+    <div class="modal-dialog  image-modal-dialog">
+      <div class="modal-content  show-modal-content ">
+        <div class="row mr-0 ml-0">
+  
+  <div class="column column1">
+  </div>
+  <div class="column column2">
+  <div class="h-1 mag-btnm">
+  
+   <div class="row">
+    <div class="col-sm-3 pr-0 col-form-label">
+     <%= gravatar_for @user, style: 'width:10px' %>
+    </div>
+    <div class="col-sm-9 pt-3 pl-0">
+   <p class="username"><%=@user.username %></p>
+    </div>
+  </div>
+
+  </div>
+  <div class="h-2">Height 75%</div>
+  </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const doStuff = (e) =>  {
+if(e.target.classList.contains('img_preview')){
+document.querySelector('.image-modal-dialog').style.display = "none";
+document.querySelector('.column1').innerHTML = '';
+var image = document.createElement("IMG");
+image.setAttribute("src", `${e.target.src}`);
+image.setAttribute('class', ' object-fit');
+document.querySelector('.column1').appendChild(image);
+
+setTimeout(function(){
+document.querySelector('.image-modal-dialog').style.display = "block";
+   }, 500);
+
+
+
+}
+}
+
+const gallery = document.querySelector('.grid-container');
+if(gallery){
+gallery.addEventListener('click', doStuff)
+}
+</script>

@@ -1,0 +1,152 @@
+    
+    
+  <% if logged_in? %>
+<section class= '_1SP8R'>
+
+<div class="cGcGK"> 
+  <% @posts.each do |post| %>
+    <section class="post pb-5">
+     <div class="user">
+    <div class="avatar">
+        <%= gravatar_for post.user, size: 40 %>
+    </div>
+    <div class="username">
+      <%= link_to post.user.username, user_path(post.user), :class => 'some_class' %>
+    </div>
+  </div>
+  <%= image_tag(post.image, class:"img-fluid image-width" ) if post.image.attached?%>
+  <div class="description  description-<%= post.id %>'">
+
+  
+<%= link_to like_post_path(post.id), remote: true do %>
+  <span class = 'like_icon' id = 'like_<%= post.id %>'><i class="far fa-heart"></i></span>
+<% end %>
+
+<br/>
+<small class = 'like-count-<%= post.id %>'>
+<%=  render 'likes/like', post: post %>
+</small>
+<br/>
+      <span class="username"><%= post.user.username %></span> 
+      <span class="ml-1"> <%= post.description %> </span> 
+<% if post.comments.blank? %>
+
+<section class='pt-1'>
+<p class= 'comment-count  comment-count-<%= post.id %>'>  </p>
+<div id = 'append-comments-<%= post.id %>'>
+<%=  render post.comments %>
+</div>
+</section>
+
+<% else %>
+<section class='pt-1'>
+<p class= 'comment-count  comment-count-<%= post.id %>'> View <%= post.comments.count > 1 ? 'All' : '' %> <%= post.comments.count %> <%= post.comments.count > 1 ? 'Comments' : 'Comment' %> </p>
+<div id = 'append-comments-<%= post.id %>'>
+<%=  render post.comments %>
+</div>
+</section>
+<% end %>
+
+   <p class = 'Nzb55 '><%= localize(post.created_at, :format => :long ) %> </p>      
+  </div>
+<div class="description form-for-comments" id = 'form-<%= post.id %>'>
+<%= form_for([post, post.comments.build], remote: true, ) do |form| %>  <%# no Ajax <%= form_for [post, post.comments.new] do |form| %> 
+
+ <div class="form-group form-style mb-0">
+<%= form.text_area :body, class: 'Ypffh', placeholder: "Add a comment..." %>
+ <%= form.submit({:class => 'float-right post-comment-btn', :value =>'Post'}) %>
+</div>
+<% end %>
+</div>
+    </section>
+  <% end %>
+</div>
+
+
+<div class = ''></div>
+
+</section>  
+    <% else %>
+<% if @user.errors.any? %>
+<div class = 'mb-5'>
+<% @user.errors.full_messages.each do |msg| %>
+<div class="alert alert-danger alert-dismissible fade show">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+<%= msg %>
+</div>
+ <% end %>
+</div>
+<% end %>
+
+<body class="no-padding">
+        <main class="login">
+            <div class="login__column">               
+ <img src="<%= asset_path('phone.png') %>" alt="Phone Image" class="login__phone-image"    title="Phone Image" />
+            </div>
+            <section class="login__column">
+              <main class = 'append_new_form'>
+                <div class="login__section login__sign-in">
+                  <img src="<%= asset_path('logo.png') %>"
+                        alt="Logo"
+                        title="Logo"
+                        class="login__logo" />
+<%= form_for(:session, :html => {class: "login__form", role: "form"}, url: login_path) do |f| %>
+
+                        <div class="login__input-container">
+<%= f.email_field :email, class: "login__input", placeholder: "Enter email",  autocomplete: false %>
+                        </div>
+                        <div class="login__input-container">
+ <%= f.password_field :password, autocomplete: "new-password" , class: "login__input" ,placeholder: "Enter password"%>
+                        </div>
+                        <div class="login__input-container">
+              <%= f.submit "Login", class: 'login__input login__input--btn' %>
+                        </div>
+                    </form>
+                    <% end %>
+                    <span class="login__divider">or</span>
+                </div>
+                <div class="login__section login__sign-up">
+                    <span class="login__text">
+                        Don't have an account? 
+                        <a href="javascript:void(0)" class="login__link">
+                            Sign up
+                        </a>
+                    </span>
+                </div>
+                </main>
+            </section>
+        </main>
+        <script>
+        $(document).ready(function(){
+    // Here we put all the code
+    var heart = $('.heart'),
+        cog = $('#cog'),
+        popUp = $('.popUp'),
+        closePopUp = $('#closePopUp'),
+        cancelPopUp = $('#cancelPopUp');
+        login__link = $('.login__link');
+
+
+    heart.click(function(){
+        $(this).toggleClass('fa-heart-o');
+        $(this).toggleClass('heart-red fa-heart');
+    })
+
+    cog.click(function(){
+        popUp.fadeIn(500);
+    })
+
+    closePopUp.click(function(){
+        popUp.fadeOut(500);
+    })
+
+    cancelPopUp.click(function(){
+        popUp.slideUp(500)
+    })
+
+})
+        </script>
+    </body>
+<% end %>
+
+    

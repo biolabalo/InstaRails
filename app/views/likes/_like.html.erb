@@ -1,0 +1,5 @@
+ <% if post.likes.count == 1 %>
+ <b class= 'like-count'> 1 like </b>
+ <% else %>
+<b class= 'like-count'>  <%= post.likes.count > 0 ? post.likes.count : '' %>  <%= post.likes.count > 0 ? 'likes' : '' %> </b>
+<% end %>

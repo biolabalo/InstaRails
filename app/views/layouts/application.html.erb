@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+ <head>
+    <title>Instagram</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+ <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="shortcut icon"  href="<%= asset_path('favicon.ico') %>"  type="image/x-icon">  
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Lato|Lobster&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+
+ <% flash.each do |name, msg| %>
+  <div class="alert alert-success  alert-dismissible">
+   <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p><%= msg %></p>
+  </div>
+  <% end %>
+
+<% if logged_in? %>
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-light d-flex fixed-top" style="backgroundcolor:#fff;">
+      <div class="container nav_color">
+        <div class="logo">
+            <i class="fab fa-instagram fa-2x float-left"></i> 
+          <div class="SvO5t float-left"></div>
+<%= link_to(image_tag("/assets/instag.png"), root_path) %> 
+        </div>
+        <div class="m-auto">
+          <form class="form-inline search-form">
+            <input class="form-control mr-sm-2" type="search" placeholder="@search" aria-label="Search">
+          </form>
+        </div>
+        <div class="user-section">
+ <%= link_to "Upload your pic", new_post_path  %>
+ <%= link_to "View your profile", user_path(current_user) %>
+<a> <%= link_to 'Log out', logout_path, method: :delete %></a>
+        
+        </div>
+      </div>
+    </nav>
+    <% else %>
+
+
+<% end %>
+
+    <!--Main content-->
+    <section class = '_9eogI E3X2T'>
+    <main class="SCxLW" style="min-height: 500px;">
+      <%= yield %> 
+    </main>
+    </section>
+
+    <!--Footer-->
+    <footer class="container footer">
+      <nav class="navbar d-flex">
+        <ul>
+          <li>ABOUT US
+          </li>
+          <li>SUPPORT</li>
+          <li>PRESS</li>
+          <li>API</li>
+          <li>JOBS</li>
+          <li>PRIVACY</li>
+          <li>TERMS</li>
+          <li>DIRECTORY</li>
+          <li>PROFILES</li>
+          <li>HASHTAGS</li>
+          <li>LANGUAGE</li>
+        </ul>
+        <p> © 2019 INSTAGRAM::Balogun Akeem </p>
+      </nav>
+    </footer>
+  </body>
+
+
+  <script>
+var body = 
+ document.querySelector('body').addEventListener("click", (e)=> {
+
+if (e.target.className === 'login__link'){
+
+const formTobeReplaced  =  document.querySelector(".login__sign-in");
+formTobeReplaced.style.display = "none";
+document.querySelector(".append_new_form").innerHTML =  `<div class="login__section login__sign-in signup_form">
+                  <img src="/assets/logo-3212c49e9b348feac97fe5a0429cdeabfa0a9581a2e5a3d27b8cd9c323074b01.png" alt="Logo" title="Logo" class="login__logo">
+                    <%= form_with scope: :user, url: users_path, local: true do |f| %>
+
+
+ <div class="login__input-container pb-2">
+<%= f.text_field :username, class: "form-control", placeholder: "Enter username", autofocus: true, autocomplete: false %>
+   </div>
+
+
+                        <div class="login__input-container pb-2">
+                        <%= f.email_field :email, class: "login__input", placeholder: "Enter email",  autocomplete: false %>
+                        </div>
+                        <div class="login__input-container pb-2">
+                        <%= f.password_field :password, class: "login__input", autocomplete: "new-password" , placeholder: "Enter password"%>
+                        </div>
+                        <div class="login__input-container pb-2">
+                         <%= f.submit "Sign up", class: 'login__input login__input--btn' %>
+                        </div>
+                      <a class="back mb-4" onclick="JavaScript:window.location = '/' ">  Back </a>
+                   </form>
+                 <% end %>
+                </div>`;
+}
+});
+
+
+const InstaLogo  =  document.querySelector(".insta_logo");
+if (InstaLogo){
+InstaLogo.addEventListener("click", ()=> {
+window.location = '/'
+});
+}
+  </script>
+</html>

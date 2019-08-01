@@ -1,0 +1,13 @@
+<div class="containerz"> 
+<%= form_for(Post.new, html: {id: "contact"})  do |f| %>
+   <fieldset>
+     <%= f.text_field :description, placeholder:'Description' %>
+    </fieldset>
+ <fieldset>
+    <%= f.file_field :image, class:'mt-5' %>
+    </fieldset>
+  <div class="text-center">
+    <%= f.submit 'Create Post', class: 'btn btn-primary mt-5' %>
+  </div>
+<% end %>
+</div>

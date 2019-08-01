@@ -1,0 +1,23 @@
+$('#append-comments-<%= @post.id %>').append("<%=j render 'comments/comment', post: @post, comment: @comment %>");
+const clickedForm = $('#form-<%= @post.id %>')
+const checkIfCommentExist = (value) => {
+if (value.includes("View") || value.includes("Comments") || value.includes("Comment")){
+ return true
+}
+return false
+}
+
+const countHolder = document.querySelector('.comment-count-<%= @post.id %>');
+const  commentExist = checkIfCommentExist(countHolder.innerHTML);
+if (commentExist){
+var text = countHolder.innerHTML;
+var getPart = text.replace ( /[^\d.]/g, '' ); // returns 0023
+var num = parseInt(getPart); // returns 23
+var newVal = num+1; // returns 24
+var reg = new RegExp(num); // create dynamic regexp
+var newstring = text.replace ( reg, newVal );
+countHolder.innerHTML = newstring;
+}else{
+countHolder.innerHTML = 'View 1 Comment'
+}
+clickedForm[0].children[0].reset()
